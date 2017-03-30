@@ -15,7 +15,6 @@ output "key-name" {
 
 module "child" {
   source = "./module/child"
-
   memory = "1G"
 }
 
@@ -26,7 +25,8 @@ output "child_memory" {
 
 
 module "vpc" {
-  source = "./module/vpc"
+  source   = "./module/vpc"
+	#vpc_name = "test-ankur-vpc"
 }
 
 module "key-pair" {
@@ -37,7 +37,7 @@ module "subnet" {
 	source = "./module/subnet"
 	cidr = "192.168.1.0/24"
 	az = "us-west-2a"
-	vpc-id = "${module.vpc.id}"	
+	vpc-id = "${module.vpc.id}"
 }
 
 module "gw" {
@@ -48,7 +48,7 @@ module "gw" {
 module "route" {
 	source = "./module/rt"
 	vpc_id = "${module.vpc.id}"
-	gateway_id  = "${module.gw.id}" 
+	gateway_id  = "${module.gw.id}"
 }
 
 module "sg" {
@@ -61,7 +61,8 @@ module "server" {
 	subnet_id = "${module.subnet.id}"
 	name	= "chef-server"
 #	vpc-id = "${module.vpc.id}"
-	pri-ip	= "192.168.1.211"
+  sg_ids = "${module.sg.id}"
+  pri-ip	= "192.168.1.211"
 	key_name = "${module.key-pair.key-name}"
 }
 
@@ -73,13 +74,16 @@ module "wks" {
         name    = "chef-wks"
 #	vpc-id = "${module.vpc.id}"
 	key_name = "${module.key-pair.key-name}"
+	sg_ids = "${module.sg.id}"
 	pri-ip	= "192.168.1.106"
 }
+
 module "server_eip" {
 	source = "./module/eip"
 	instance_id = "${module.server.id}"
 	vpc_id = "${module.vpc.id}"
 }
+
 module "wks_eip" {
 	source = "./module/eip"
 	instance_id = "${module.wks.id}"
@@ -97,4 +101,3 @@ module "wks_ass" {
 	pub_ip = "${module.wks_eip.ip}"
 	instance_id = "${module.wks.id}"
 }
-

@@ -12,3 +12,7 @@ variable "name" {}
 #variable "vpc-id" {}
 variable "key_name" {}
 variable "pri-ip" {}
+
+variable "sg_ids" {
+	type = "list"
+}
