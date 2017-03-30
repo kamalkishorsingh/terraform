@@ -26,7 +26,7 @@ output "child_memory" {
 
 module "vpc" {
   source   = "./module/vpc"
-	#vpc_name = "test-ankur-vpc"
+	vpc_name = "test-ankur-vpc"
 }
 
 module "key-pair" {
