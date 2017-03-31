@@ -1,0 +1,2 @@
+variable "path" {}
+variable "name" {}

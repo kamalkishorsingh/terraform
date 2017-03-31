@@ -1,3 +1,7 @@
 variable "vpc_id" {}
-variable "vpc_cidr" {}
-variable "private_subnet_cidr" {}
+variable "cidr" {
+	default = "0.0.0.0/0"
+}
+variable "sg_name" {
+	default = "sg_rds"
+}

@@ -4,6 +4,4 @@ variable "cidr" {}
 
 variable "az" {}
 
-variable "name" {
-	default = "vpc-zone"
-}
+variable "name" {}
